@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { fetchHello } from './services/api';
+import axios from "axios";
+
 
 function App() {
   const [message, setMessage] = useState('');
 
   const handleClick = async () => {
-    const result = await fetchHello();
-    setMessage(result);
+    axios.get('/api/hello')
+    .then((res) => {
+      setMessage(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   };
 
   return (
