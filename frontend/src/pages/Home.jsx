@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import FeatureCard from "../components/Home/FeatureCard";
 
 function Home() {
     return (
@@ -27,19 +28,10 @@ function Home() {
         </section>
 
         {/* Features Section */}
-        <section className="bg-white py-12 px-6 max-w-5xl mx-auto grid md:grid-cols-3 gap-6 text-center">
-            <div className="p-6 border rounded shadow-sm hover:shadow-md transition">
-            <h3 className="text-xl font-semibold mb-2">📘 단어장 관리</h3>
-            <p className="text-gray-600">나만의 단어장을 만들고, 단어를 등록하고, 관리할 수 있어요.</p>
-            </div>
-            <div className="p-6 border rounded shadow-sm hover:shadow-md transition">
-            <h3 className="text-xl font-semibold mb-2">🔁 퀴즈 학습</h3>
-            <p className="text-gray-600">객관식 / 주관식 퀴즈로 반복 학습하고, 틀린 단어만 다시 공부해요.</p>
-            </div>
-            <div className="p-6 border rounded shadow-sm hover:shadow-md transition">
-            <h3 className="text-xl font-semibold mb-2">🌐 단어장 공유</h3>
-            <p className="text-gray-600">공개 단어장을 보고 내 단어장으로 복사할 수 있어요.</p>
-            </div>
+        <section className="bg-white py-12 px-6 max-w-5xl mx-auto grid md:grid-cols-3 gap-6 text-center"> {/** grid-cols-3 FeatureCard 개수에 따라 다르게 설정 */}
+            <FeatureCard title="📘 단어장 관리" text="나만의 단어장을 만들고, 단어를 등록하고, 관리할 수 있어요." />
+            <FeatureCard title="🔁 퀴즈 학습" text="객관식 / 주관식 퀴즈로 반복 학습하고, 틀린 단어만 다시 공부해요." />
+            <FeatureCard title="🌐 단어장 공유" text="공개 단어장을 보고 내 단어장으로 복사할 수 있어요." />
         </section>
 
         {/* Footer */}
