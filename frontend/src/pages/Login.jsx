@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TextInput from "../components/ui/TextInput";
+import SubmitButton from "../components/ui/SubmitButton";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -24,12 +25,7 @@ function Login() {
                     <TextInput text="이메일" id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <TextInput text="비밀번호" id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
-                    >
-                        로그인
-                    </button>
+                    <SubmitButton text="로그인" />
                     
                 </form>
 

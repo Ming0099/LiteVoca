@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TextInput from "../components/ui/TextInput";
+import SubmitButton from "../components/ui/SubmitButton";
 
 function Signup() {
     const [email, setEmail] = useState("");
@@ -29,18 +30,14 @@ function Signup() {
                     <h2 className="text-2xl font-bold text-center mb-6 text-blue-500">LiteVoca 회원가입</h2>
 
                     <form onSubmit={handleSignup} className="space-y-4">
-                        
+
                         <TextInput text="이메일" id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                         <TextInput text="닉네임" id="nickname" type="text" value={nickname} onChange={(e) => setNickname(e.target.value)}/>
                         <TextInput text="비밀번호" id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         <TextInput text="비밀번호 확인" id="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
 
-                        <button
-                            type="submit"
-                            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
-                        >
-                            회원가입
-                        </button>
+                        <SubmitButton text="회원가입" />
+                        
                     </form>
 
                     <p className="text-sm text-gray-600 mt-4 text-center">
