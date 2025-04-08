@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import TextInput from "../components/ui/TextInput";
 
 function Signup() {
     const [email, setEmail] = useState("");
@@ -28,61 +29,11 @@ function Signup() {
                     <h2 className="text-2xl font-bold text-center mb-6 text-blue-500">LiteVoca 회원가입</h2>
 
                     <form onSubmit={handleSignup} className="space-y-4">
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                이메일
-                            </label>
-                            <input
-                                id="email"
-                                type="email"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="nickname" className="block text-sm font-medium text-gray-700">
-                                닉네임
-                            </label>
-                            <input
-                                id="nickname"
-                                type="text"
-                                required
-                                value={nickname}
-                                onChange={(e) => setNickname(e.target.value)}
-                                className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                                비밀번호
-                            </label>
-                            <input
-                                id="password"
-                                type="password"
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                                비밀번호 확인
-                            </label>
-                            <input
-                                id="confirmPassword"
-                                type="password"
-                                required
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            />
-                        </div>
+                        
+                        <TextInput text="이메일" id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <TextInput text="닉네임" id="nickname" type="text" value={nickname} onChange={(e) => setNickname(e.target.value)}/>
+                        <TextInput text="비밀번호" id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <TextInput text="비밀번호 확인" id="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
 
                         <button
                             type="submit"

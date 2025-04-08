@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import TextInput from "../components/ui/TextInput";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -19,33 +20,9 @@ function Login() {
                 <h2 className="text-2xl font-bold text-center mb-6 text-blue-500">LiteVoca 로그인</h2>
 
                 <form onSubmit={handleLogin} className="space-y-4">
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                            이메일
-                        </label>
-                        <input
-                            id="email"
-                            type="email"
-                            required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        />
-                    </div>
 
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                            비밀번호
-                        </label>
-                        <input
-                            id="password"
-                            type="password"
-                            required
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        />
-                    </div>
+                    <TextInput text="이메일" id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <TextInput text="비밀번호" id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
                     <button
                         type="submit"
@@ -53,6 +30,7 @@ function Login() {
                     >
                         로그인
                     </button>
+                    
                 </form>
 
                 <p className="text-sm text-gray-600 mt-4 text-center">
