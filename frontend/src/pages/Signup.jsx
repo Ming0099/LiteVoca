@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TextInput from "../components/ui/TextInput";
 import SubmitButton from "../components/ui/SubmitButton";
+import axios from "../api/axiosInstance";
 
 function Signup() {
     const [email, setEmail] = useState("");
@@ -10,8 +11,11 @@ function Signup() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate();
 
-    const handleSignup = (e) => {
+    const [message, setMessage] = useState("");
+
+    const handleSignup = async (e) => {
         e.preventDefault();
+        setMessage("");
 
         // 비밀번호 중복체크
         if (password !== confirmPassword) {
@@ -19,9 +23,14 @@ function Signup() {
             return;
         }
 
-        // TODO 백엔드 회원가입 API 연동
-        console.log("회원가입 시도", { email, nickname, password });
-        navigate("/login"); // 로그인 페이지로 이동
+        // 회원가입 요청
+        try{
+            const res = await axios.post("/auth/signup", {email, nickname, password});
+            alert("회원가입 성공! 로그인 페이지로 이동합니다.");
+            navigate("/login"); // 로그인 페이지로 이동
+        }catch (err){
+            setMessage("회원가입 실패: 알 수 없는 오류");
+        }
     };
 
     return (
@@ -37,6 +46,10 @@ function Signup() {
                         <TextInput text="비밀번호 확인" id="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
 
                         <SubmitButton text="회원가입" />
+
+                        {message && (
+                            <p className="mt-4 text-center text-sm text-red-500">{message}</p>
+                        )}
                         
                     </form>
 
