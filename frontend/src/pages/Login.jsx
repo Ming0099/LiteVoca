@@ -2,17 +2,27 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TextInput from "../components/ui/TextInput";
 import SubmitButton from "../components/ui/SubmitButton";
+import axios from "../api/axiosInstance";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const [message, setMessage] = useState("");
+
+    const handleLogin = async (e) => {
         e.preventDefault();
+
+        setMessage("");
+
         // TODO 백엔드 인증 요청 → 성공 시 토큰 저장 + 이동
-        console.log("로그인 시도", { email, password });
-        navigate("/");
+        try{
+            const res = await axios.post("/auth/login", {email, password});
+            navigate("/");
+        }catch(err){
+            setMessage("존재하지 않는 이메일 또는 비밀번호입니다.");
+        }
     };
 
     return (
@@ -24,6 +34,10 @@ function Login() {
 
                     <TextInput text="이메일" id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <TextInput text="비밀번호" id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+
+                    {message && (
+                            <p className="mt-4 text-center text-sm text-red-500">{message}</p>
+                    )}
 
                     <SubmitButton text="로그인" />
                     
