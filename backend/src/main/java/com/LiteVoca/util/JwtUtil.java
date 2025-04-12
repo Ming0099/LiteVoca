@@ -2,6 +2,7 @@ package com.LiteVoca.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -10,12 +11,15 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    // TODO SECRET_KEY는 외부주입으로 바꿀것!
-    private final String SECRET_KEY = "12345678901234567890123456789012"; // 테스트용 최소 32 바이트 이상으로 해야됨
-    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 24시간 - JWT 만료시간
+    // secretKey, expirationTime 외부주입
+    private final Key key;
+    private final long expirationTime;
 
-    // key 생성
-    private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    public JwtUtil(@Value("${jwt.secret}") String secretKey,
+                   @Value("${jwt.expiration}") long expirationTime) {
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
+        this.expirationTime = expirationTime;
+    }
 
     // 토큰 생성
     public String createToken(String email, Long userId){
@@ -23,7 +27,7 @@ public class JwtUtil {
                 .setSubject(email)
                 .claim("userId", userId)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }

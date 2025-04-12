@@ -11,10 +11,12 @@ class JwtUtilTest {
 
     private final String testEmail = "test@example.com";
     private final Long testUserId = 123L;
+    private final String testSecretKey = "12345678901234567890123456789012"; // 32 bytes 이상
+    private final long testExpiration = 1000 * 60 * 60; // 1시간
 
     @BeforeEach
     void setUp(){
-        jwtUtil = new JwtUtil();
+        jwtUtil = new JwtUtil(testSecretKey, testExpiration);
     }
 
     @Test
