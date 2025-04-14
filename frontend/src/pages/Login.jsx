@@ -19,6 +19,8 @@ function Login() {
         // TODO 백엔드 인증 요청 → 성공 시 토큰 저장 + 이동
         try{
             const res = await axios.post("/auth/login", {email, password});
+            console.log("nick : " + res.data.nickname);
+            console.log("token : " + res.data.token);
             navigate("/");
         }catch(err){
             setMessage("존재하지 않는 이메일 또는 비밀번호입니다.");

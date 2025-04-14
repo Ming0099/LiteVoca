@@ -1,6 +1,7 @@
 package com.LiteVoca.controller;
 
 import com.LiteVoca.dto.user.LoginRequest;
+import com.LiteVoca.dto.user.LoginResponse;
 import com.LiteVoca.dto.user.SignupRequest;
 import com.LiteVoca.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest req){
-        System.out.println(req.getEmail());
-        System.out.println(req.getPassword());
-        return "";
+    public ResponseEntity<?> login(@RequestBody LoginRequest req){
+        LoginResponse response = userService.login(req);
+        return ResponseEntity.ok(response);
     }
 }
