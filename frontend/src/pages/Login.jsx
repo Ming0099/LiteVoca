@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import TextInput from "../components/ui/TextInput";
 import SubmitButton from "../components/ui/SubmitButton";
 import axios from "../api/axiosInstance";
+import { useAuth } from "../contexts/AuthContext";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -10,6 +11,9 @@ function Login() {
     const navigate = useNavigate();
 
     const [message, setMessage] = useState("");
+
+    const { login } = useAuth();
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -19,8 +23,8 @@ function Login() {
         // TODO 백엔드 인증 요청 → 성공 시 토큰 저장 + 이동
         try{
             const res = await axios.post("/auth/login", {email, password});
-            console.log("nick : " + res.data.nickname);
-            console.log("token : " + res.data.token);
+            const token = res.data.token;
+            login(token);
             navigate("/");
         }catch(err){
             setMessage("존재하지 않는 이메일 또는 비밀번호입니다.");

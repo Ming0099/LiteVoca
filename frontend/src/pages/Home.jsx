@@ -1,15 +1,26 @@
 import { Link } from "react-router-dom";
 import FeatureCard from "../components/Home/FeatureCard";
+import { useAuth } from "../contexts/AuthContext";
 
 function Home() {
+    const { isLoggedIn, logout } = useAuth();
+
     return (
         <div className="min-h-screen bg-white flex flex-col">
         {/* Header */}
         <header className="flex justify-between items-center px-6 py-4 border-b shadow-sm">
             <Link to="/" className="text-2xl font-bold text-blue-600">LiteVoca</Link>
             <nav className="space-x-4">
-            <Link to="/login" className="text-gray-600 hover:text-blue-600">로그인</Link>
-            <Link to="/signup" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">회원가입</Link>
+                {/* 로그인 시 */}
+                {isLoggedIn ? (
+                    // TODO 마이페이지 버튼 추가해야함
+                    <Link onClick={logout} className="px-4 py-2 rounded border hover:text-white hover:bg-red-500">로그아웃</Link>
+                ) : (
+                    <>
+                    <Link to="/login" className="text-gray-600 hover:text-blue-600">로그인</Link>
+                    <Link to="/signup" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">회원가입</Link>
+                    </>
+                )}
             </nav>
         </header>
 
