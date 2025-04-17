@@ -13,12 +13,24 @@ function Home() {
             <nav className="space-x-4">
                 {/* 로그인 시 */}
                 {isLoggedIn ? (
-                    // TODO 마이페이지 버튼 추가해야함
-                    <Link onClick={logout} className="px-4 py-2 rounded border hover:text-white hover:bg-red-500">로그아웃</Link>
+                    <>
+                    {/** TODO 버튼 스타일 변경 필요 */}
+                    <Link to="/my-voca" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        내 단어장
+                    </Link>
+                    {/** TODO 마이페이지 버튼 추가해야함 */}
+                    <Link onClick={logout} className="px-4 py-2 rounded border hover:text-white hover:bg-red-500">
+                        로그아웃
+                    </Link>
+                    </>
                 ) : (
                     <>
-                    <Link to="/login" className="text-gray-600 hover:text-blue-600">로그인</Link>
-                    <Link to="/signup" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">회원가입</Link>
+                    <Link to="/login" className="text-gray-600 hover:text-blue-600">
+                        로그인
+                    </Link>
+                    <Link to="/signup" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        회원가입
+                    </Link>
                     </>
                 )}
             </nav>
@@ -28,13 +40,11 @@ function Home() {
         <section className="flex flex-col items-center justify-center flex-1 text-center px-4 py-12 bg-blue-50">
             <h2 className="text-4xl font-bold mb-4">쉽고 가볍게 단어 암기!</h2>
             <p className="text-gray-600 mb-6 max-w-xl">
-            LiteVoca는 나만의 단어장을 만들고, 공유하고, 퀴즈로 복습할 수 있는 영단어 학습 서비스입니다.
+                LiteVoca는 나만의 단어장을 만들고, 공유하고, 퀴즈로 복습할 수 있는 영단어 학습 서비스입니다.
             </p>
-            <Link
-            to="/signup"
-            className="bg-blue-500 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-600"
-            >
-            지금 시작하기
+            {/** TODO 로그인시 단어장 목록 페이지로 이동 (다른사람이 공유한 단어장이 보여지는 페이지) */}
+            <Link to="/signup" className="bg-blue-500 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-600">
+                지금 시작하기
             </Link>
         </section>
 
