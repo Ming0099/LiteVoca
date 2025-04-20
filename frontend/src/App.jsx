@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AuthProvider from "./contexts/AuthContext";
+import MyVocaListPage from "./pages/MyVocaListPage";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/my-voca" element={<MyVocaListPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AuthProvider>
