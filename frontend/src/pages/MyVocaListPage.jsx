@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 const MyVocaListPage = () => {
+    const [searchTerm, setSearchTerm] = useState("");
+
     // dummy data
     const vocabs = [
         {
@@ -17,6 +19,11 @@ const MyVocaListPage = () => {
         },
     ];
 
+    // 검색 필터링
+    const filteredVoca = vocabs.filter((vocab) =>
+        vocab.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-6">
@@ -26,8 +33,19 @@ const MyVocaListPage = () => {
                 </button>
             </div>
 
+            {/* 검색창 */}
+            <div className="mb-4 flex justify-center">
+                <input
+                type="text"
+                placeholder="단어장 제목 검색..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full md:w-1/2 px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                />
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {vocabs.map((vocab) => (
+                {filteredVoca.map((vocab) => (
                     <div key={vocab.id} className="bg-white shadow-md rounded-xl p-4">
                         <h2 className="text-xl font-semibold">{vocab.title}</h2>
                         <p className="text-gray-600">{vocab.description}</p>
@@ -39,6 +57,9 @@ const MyVocaListPage = () => {
                         </div>
                     </div>
                 ))}
+                {filteredVoca.length === 0 && (
+                    <p className="text-gray-500 col-span-full text-center mt-8">검색 결과가 없습니다.</p>
+                )}
             </div>
         </div>
     );
