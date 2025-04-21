@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import React, { useState } from "react";
 
 const MyVocaListPage = () => {
@@ -27,10 +28,8 @@ const MyVocaListPage = () => {
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-6">
+                <Link to="/" className="text-2xl font-bold text-blue-600">LiteVoca</Link>
                 <h1 className="text-2xl font-bold">내 단어장</h1>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-                    + 새 단어장
-                </button>
             </div>
 
             {/* 검색창 */}
@@ -57,9 +56,20 @@ const MyVocaListPage = () => {
                         </div>
                     </div>
                 ))}
+                
                 {filteredVoca.length === 0 && (
                     <p className="text-gray-500 col-span-full text-center mt-8">검색 결과가 없습니다.</p>
                 )}
+
+                {filteredVoca.length === vocabs.length && ( // 검색을 하지 않았을때
+                    <div
+                        onClick={() => alert("새 단어장 모달")} // TODO 모달 연동 필요 시 함수 연결 필요
+                        className="cursor-pointer flex items-center justify-center bg-white shadow-md rounded-xl p-4 border-2 border-dashed border-blue-400 hover:bg-blue-50 transition"
+                    >
+                        <span className="text-blue-500 text-lg font-medium">+ 새 단어장</span>
+                    </div>
+                )}
+                
             </div>
         </div>
     );
