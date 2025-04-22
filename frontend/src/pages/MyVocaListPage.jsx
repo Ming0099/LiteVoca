@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
+import VocaCard from "../components/MyVocaListPage/VocaCard";
 
 const MyVocaListPage = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -45,16 +46,7 @@ const MyVocaListPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredVoca.map((vocab) => (
-                    <div key={vocab.id} className="bg-white shadow-md rounded-xl p-4">
-                        <h2 className="text-xl font-semibold">{vocab.title}</h2>
-                        <p className="text-gray-600">{vocab.description}</p>
-                        <p className="mt-2 text-sm text-gray-500">{vocab.wordCount} 단어</p>
-                        <div className="mt-4 flex gap-2">
-                        <button className="bg-green-500 text-white px-3 py-1 rounded">보기</button>
-                        <button className="bg-yellow-500 text-white px-3 py-1 rounded">수정</button>
-                        <button className="bg-red-500 text-white px-3 py-1 rounded">삭제</button>
-                        </div>
-                    </div>
+                    <VocaCard vocaId={vocab.id} title={vocab.title} description={vocab.description} wordCount={vocab.wordCount} />
                 ))}
                 
                 {filteredVoca.length === 0 && (
