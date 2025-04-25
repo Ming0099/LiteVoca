@@ -1,9 +1,16 @@
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import VocaCard from "../components/MyVocaListPage/VocaCard";
+import VocaCreateModal from "../components/MyVocaListPage/VocaCreateModal";
 
 const MyVocaListPage = () => {
     const [searchTerm, setSearchTerm] = useState("");
+    const [showModal, setShowModal] = useState(false);
+
+    const handleCreate = (newVoca) => {
+        console.log("단어장 생성 : ", newVoca);
+        // TODO 단어장 생성시 서버/DB 연동 필요
+    }
 
     // dummy data
     const vocabs = [
@@ -55,7 +62,7 @@ const MyVocaListPage = () => {
 
                 {filteredVoca.length === vocabs.length && ( // 검색을 하지 않았을때
                     <div
-                        onClick={() => alert("새 단어장 모달")} // TODO 모달 연동 필요 시 함수 연결 필요
+                        onClick={() => setShowModal(true)}
                         className="cursor-pointer flex items-center justify-center bg-white shadow-md rounded-xl p-4 border-2 border-dashed border-blue-400 hover:bg-blue-50 transition"
                     >
                         <span className="text-blue-500 text-lg font-medium">+ 새 단어장</span>
@@ -63,6 +70,13 @@ const MyVocaListPage = () => {
                 )}
                 
             </div>
+
+            {/* 새 단어장 만들기 모달창 */}
+            <VocaCreateModal
+                isOpen={showModal}
+                onClose={() => setShowModal(false)}
+                onSubmit={handleCreate}
+            />
         </div>
     );
 };
