@@ -4,6 +4,7 @@ const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     // 토큰 만료 여부 확인
     const isTokenExpired = (token) => {
@@ -25,6 +26,7 @@ const AuthProvider = ({children}) => {
                 setIsLoggedIn(true);
             }
         }
+        setIsLoading(false); // 로딩 완료
     }, []);
 
     const login = (token) => {
@@ -38,7 +40,7 @@ const AuthProvider = ({children}) => {
     };
 
     return (
-        <AuthContext.Provider value={{isLoggedIn,login,logout}}>
+        <AuthContext.Provider value={{isLoggedIn,isLoading,login,logout}}>
             {children}
         </AuthContext.Provider>
     );
