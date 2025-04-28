@@ -4,6 +4,7 @@ import VocaCard from "../components/MyVocaListPage/VocaCard";
 import VocaCreateModal from "../components/MyVocaListPage/VocaCreateModal";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import axios from "axios";
 
 const MyVocaListPage = () => {
     const { isLoggedIn, isLoading } = useAuth();
@@ -14,14 +15,40 @@ const MyVocaListPage = () => {
         if (!isLoading && !isLoggedIn) {
             navigate("/login");
         }
+
+        const fetchVocabs = async () => {
+            try {
+                const response = await axios.get("/api/vocabulary-books/me");
+
+                console.log(response.data);
+    
+            } catch (error) {
+                console.error(error);
+                alert("단어장 목록을 가져오는 중 오류가 발생했습니다.");
+            }
+        };
+
+        if (!isLoading && isLoggedIn) {
+            fetchVocabs();
+        }
+
     }, [isLoggedIn, isLoading, navigate]);
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showModal, setShowModal] = useState(false);
 
-    const handleCreate = (newVoca) => {
-        console.log("단어장 생성 : ", newVoca);
-        // TODO 단어장 생성시 서버/DB 연동 필요
+    const handleCreate = async (newVoca) => {
+        try{
+            const title = newVoca.title;
+            const description = newVoca.description;
+            const response = await axios.post("/api/vocabulary-books", {title, description});
+
+            console.log(response.data);
+            
+        } catch (error) {
+            console.error(error);
+            alert("단어장 생성 중 오류가 발생했습니다.");
+        }
     }
 
     // dummy data
