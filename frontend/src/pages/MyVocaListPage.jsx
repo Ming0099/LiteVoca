@@ -36,6 +36,7 @@ const MyVocaListPage = () => {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [vocabs, setVocabs] = useState([]);
 
     const handleCreate = async (newVoca) => {
         try{
@@ -43,29 +44,14 @@ const MyVocaListPage = () => {
             const description = newVoca.description;
             const response = await axios.post("/api/vocabulary-books", {title, description});
 
-            console.log(response.data);
+            // 생성한 단어장 리스트에 추가
+            setVocabs((prev) => [...prev, response.data]);
             
         } catch (error) {
             console.error(error);
             alert("단어장 생성 중 오류가 발생했습니다.");
         }
     }
-
-    // dummy data
-    const vocabs = [
-        {
-            id: 1,
-            title: "토익 단어장",
-            description: "토익 빈출 단어 500개",
-            wordCount: 120,
-        },
-        {
-            id: 2,
-            title: "일상 회화",
-            description: "일상에서 자주 쓰는 표현",
-            wordCount: 52,
-        },
-    ];
 
     // 검색 필터링
     const filteredVoca = vocabs.filter((vocab) =>

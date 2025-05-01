@@ -2,6 +2,8 @@ package com.LiteVoca.controller;
 
 import com.LiteVoca.dto.voca.VocabRequest;
 import com.LiteVoca.dto.voca.VocabResponse;
+import com.LiteVoca.service.VocabService;
+import com.LiteVoca.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +16,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VocabController {
 
+    private final VocabService vocabService;
+    private final JwtUtil jwtUtil;
+
     // 1. 단어장 생성
     @PostMapping
-    public ResponseEntity<VocabResponse> createVocab(@RequestBody VocabRequest request) {
-        VocabResponse createdVocab = new VocabResponse();
-        createdVocab.setId(1234L);
-        createdVocab.setTitle(request.getTitle());
-        createdVocab.setDescription(request.getDescription());
-        createdVocab.setWordCount(1234);
-        return ResponseEntity.ok(createdVocab);
+    public ResponseEntity<VocabResponse> createVocab(@RequestBody VocabRequest request, @RequestHeader("Authorization") String authHeader) {
+        // 토큰 추출
+        String token = authHeader.replace("Bearer", "");
+        Long userId = jwtUtil.getUserIdFromToken(token);
+        VocabResponse response = vocabService.createVocabularyBook(userId, request);
+
+        return ResponseEntity.ok(response);
     }
 
     // 2. 로그인한 사용자의 단어장 목록 조회
