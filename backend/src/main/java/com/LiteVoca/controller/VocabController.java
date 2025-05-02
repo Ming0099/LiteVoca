@@ -32,16 +32,10 @@ public class VocabController {
 
     // 2. 로그인한 사용자의 단어장 목록 조회
     @GetMapping("/me")
-    public ResponseEntity<List<VocabResponse>> getMyVocabs() {
-        List<VocabResponse> myVocabs = new ArrayList<>();
-        VocabResponse createdVocab = new VocabResponse();
-        createdVocab.setId(1234L);
-        createdVocab.setTitle("test title");
-        createdVocab.setDescription("test description");
-        createdVocab.setWordCount(1234);
-        myVocabs.add(createdVocab);
-        return ResponseEntity.ok(myVocabs);
+    public ResponseEntity<List<VocabResponse>> getMyVocabs(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        Long userId = jwtUtil.getUserIdFromToken(token);
+        List<VocabResponse> responseList = vocabService.getMyVocabularyBooks(userId);
+        return ResponseEntity.ok(responseList);
     }
-
-
 }

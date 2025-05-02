@@ -13,14 +13,16 @@ const MyVocaListPage = () => {
     // 로그인 상태가 아닐시 로그인 페이지로
     useEffect(() => {
         if (!isLoading && !isLoggedIn) {
+            alert("로그인 후 이용해 주세요.");
             navigate("/login");
         }
 
         const fetchVocabs = async () => {
             try {
+                // 단어장 조회
                 const response = await axios.get("/api/vocabulary-books/me");
 
-                console.log(response.data);
+                setVocabs(response.data);
     
             } catch (error) {
                 console.error(error);
@@ -42,6 +44,7 @@ const MyVocaListPage = () => {
         try{
             const title = newVoca.title;
             const description = newVoca.description;
+            // 단어장 생성
             const response = await axios.post("/api/vocabulary-books", {title, description});
 
             // 생성한 단어장 리스트에 추가
