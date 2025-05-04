@@ -8,6 +8,7 @@ import com.LiteVoca.repository.UserRepository;
 import com.LiteVoca.repository.VocabularyBookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,5 +41,18 @@ public class VocabService {
         return books.stream()
                 .map(book -> new VocabResponse(book.getId(), book.getTitle(), book.getDescription(), book.getWords().size()))
                 .collect(Collectors.toList());
+    }
+
+    // 단어장 삭제
+    @Transactional
+    public void deleteVocabularyBook(Long vocabId, Long userId) {
+        VocabularyBook vocab = vocabularyBookRepository.findById(vocabId)
+                .orElseThrow(() -> new IllegalArgumentException("단어장을 찾을 수 없습니다."));
+
+        if (!vocab.getUser().getId().equals(userId)) {
+            throw new SecurityException("삭제 권한이 없습니다.");
+        }
+
+        vocabularyBookRepository.delete(vocab);
     }
 }

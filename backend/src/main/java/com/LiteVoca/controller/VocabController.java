@@ -38,4 +38,13 @@ public class VocabController {
         List<VocabResponse> responseList = vocabService.getMyVocabularyBooks(userId);
         return ResponseEntity.ok(responseList);
     }
+
+    // 3. 단어장 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteVocab(@PathVariable Long id, @RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        Long userId = jwtUtil.getUserIdFromToken(token);
+        vocabService.deleteVocabularyBook(id, userId);
+        return ResponseEntity.noContent().build();
+    }
 }

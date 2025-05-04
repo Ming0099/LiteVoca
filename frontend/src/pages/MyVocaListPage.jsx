@@ -56,6 +56,21 @@ const MyVocaListPage = () => {
         }
     }
 
+    const handleDelete = async (id) => {
+        if (!window.confirm("정말 삭제하시겠습니까?")) return;
+    
+        try {
+            await axios.delete(`/api/vocabulary-books/${id}`);
+    
+            // 삭제 후 상태 업데이트
+            setVocabs(prev => prev.filter(v => v.id !== id));
+    
+        } catch (error) {
+            console.error(error);
+            alert("삭제 중 오류가 발생했습니다.");
+        }
+    };
+
     // 검색 필터링
     const filteredVoca = vocabs.filter((vocab) =>
         vocab.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -85,7 +100,7 @@ const MyVocaListPage = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {filteredVoca.map((vocab) => (
-                        <VocaCard vocaId={vocab.id} title={vocab.title} description={vocab.description} wordCount={vocab.wordCount} />
+                        <VocaCard vocaId={vocab.id} title={vocab.title} description={vocab.description} wordCount={vocab.wordCount} onDelete={handleDelete}/>
                     ))}
                     
                     {filteredVoca.length === 0 && (
