@@ -1,7 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function VocaCard(props){
     const { vocaId, title, description, wordCount, onDelete } = props;
+    const navigate = useNavigate();
+
+    const handleView = () =>{
+        navigate(`/my-voca/${vocaId}`);
+    };
 
     return (
         <div key={vocaId} className="bg-white shadow-md rounded-xl p-4">
@@ -9,7 +15,7 @@ function VocaCard(props){
             <p className="text-gray-600">{description}</p>
             <p className="mt-2 text-sm text-gray-500">{wordCount} 단어</p>
             <div className="mt-4 flex gap-2">
-            <button className="bg-green-500 text-white px-3 py-1 rounded">보기</button>
+            <button onClick={handleView}  className="bg-green-500 text-white px-3 py-1 rounded">보기</button>
             <button className="bg-yellow-500 text-white px-3 py-1 rounded">수정</button>
             <button onClick={() => onDelete(vocaId)} className="bg-red-500 text-white px-3 py-1 rounded">삭제</button>
             </div>

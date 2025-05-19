@@ -65,7 +65,7 @@ public class VocabService {
         VocabularyBook book = vocabularyBookRepository.findByIdAndUserId(vocabId, userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 단어장을 찾을 수 없습니다."));
 
-        List<Word> words = wordRepository.findByVocabId(vocabId);
+        List<Word> words = wordRepository.findByVocabularyBook_Id(vocabId);
 
         List<WordResponse> wordResponses = words.stream()
                 .map(word -> new WordResponse(word.getId(), word.getEnglish(), word.getMeaning(), word.getExampleSentence()))

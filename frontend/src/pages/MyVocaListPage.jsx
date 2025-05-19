@@ -100,7 +100,7 @@ const MyVocaListPage = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {filteredVoca.map((vocab) => (
-                        <VocaCard vocaId={vocab.id} title={vocab.title} description={vocab.description} wordCount={vocab.wordCount} onDelete={handleDelete}/>
+                        <VocaCard key={vocab.id} vocaId={vocab.id} title={vocab.title} description={vocab.description} wordCount={vocab.wordCount} onDelete={handleDelete}/>
                     ))}
                     
                     {filteredVoca.length === 0 && (
