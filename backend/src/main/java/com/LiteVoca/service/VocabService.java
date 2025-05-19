@@ -2,10 +2,14 @@ package com.LiteVoca.service;
 
 import com.LiteVoca.domain.User;
 import com.LiteVoca.domain.VocabularyBook;
+import com.LiteVoca.domain.Word;
+import com.LiteVoca.dto.voca.VocabDetailResponse;
 import com.LiteVoca.dto.voca.VocabRequest;
 import com.LiteVoca.dto.voca.VocabResponse;
+import com.LiteVoca.dto.word.WordResponse;
 import com.LiteVoca.repository.UserRepository;
 import com.LiteVoca.repository.VocabularyBookRepository;
+import com.LiteVoca.repository.WordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 public class VocabService {
     private final VocabularyBookRepository vocabularyBookRepository;
     private final UserRepository userRepository;
+    private final WordRepository wordRepository;
 
     // 단어장 생성
     public VocabResponse createVocabularyBook(Long userId, VocabRequest request){
@@ -54,5 +59,23 @@ public class VocabService {
         }
 
         vocabularyBookRepository.delete(vocab);
+    }
+
+    public VocabDetailResponse getVocabularyBookById(Long vocabId, Long userId) {
+        VocabularyBook book = vocabularyBookRepository.findByIdAndUserId(vocabId, userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 단어장을 찾을 수 없습니다."));
+
+        List<Word> words = wordRepository.findByVocabId(vocabId);
+
+        List<WordResponse> wordResponses = words.stream()
+                .map(word -> new WordResponse(word.getId(), word.getEnglish(), word.getMeaning(), word.getExampleSentence()))
+                .toList();
+
+        return new VocabDetailResponse(
+                book.getId(),
+                book.getTitle(),
+                book.getDescription(),
+                wordResponses
+        );
     }
 }

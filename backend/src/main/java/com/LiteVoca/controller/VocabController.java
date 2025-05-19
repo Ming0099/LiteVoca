@@ -1,5 +1,6 @@
 package com.LiteVoca.controller;
 
+import com.LiteVoca.dto.voca.VocabDetailResponse;
 import com.LiteVoca.dto.voca.VocabRequest;
 import com.LiteVoca.dto.voca.VocabResponse;
 import com.LiteVoca.service.VocabService;
@@ -46,5 +47,13 @@ public class VocabController {
         Long userId = jwtUtil.getUserIdFromToken(token);
         vocabService.deleteVocabularyBook(id, userId);
         return ResponseEntity.noContent().build();
+    }
+
+    // 단어장 상세 페이지
+    @GetMapping("/{id}")
+    public ResponseEntity<VocabDetailResponse> getVocabularyBookById(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+        Long userId = jwtUtil.getUserIdFromToken(token.substring(7));
+        VocabDetailResponse response = vocabService.getVocabularyBookById(id, userId);
+        return ResponseEntity.ok(response);
     }
 }
